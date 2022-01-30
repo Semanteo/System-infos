@@ -4,13 +4,12 @@ using System.Diagnostics;
 using System.Net;
 using System.IO;
 using System.Management;
-using System.Windows.Forms;
 
 namespace Internet
 {
     class Program
     {
-        static void Main(string[] args){
+        static void Main(){
             Console.WriteLine("Informations PC :");
             Console.WriteLine("");
             string host = Dns.GetHostName();
@@ -27,6 +26,7 @@ namespace Internet
             { 
             Double pourcentageLibre = ((Double)CurrentDrive.AvailableFreeSpace / CurrentDrive.TotalSize) * 100; 
             Console.WriteLine("Espace libre de {0} : {1}%", CurrentDrive.Name, Convert.ToInt16(pourcentageLibre)); 
+            Console.WriteLine("Espace libre restant sur {0} est de {1}/{2} Gb", CurrentDrive.Name, CurrentDrive.AvailableFreeSpace/1000000000, CurrentDrive.TotalSize/1000000000); 
             } 
             }
             Console.WriteLine("System directory : {0}", Environment.SystemDirectory);
@@ -63,6 +63,12 @@ namespace Internet
             {
             Console.WriteLine("RAM: \nPartNumber : {0}\tCapacity : {1}", ram.GetPropertyValue("PartNumber"), Convert.ToDouble(ram.GetPropertyValue("Capacity")) / 1073741824 + "GB");
             }
+
+            
+            
+
+            
+            
             Console.WriteLine("--------------------------------------------------------------");   
             Console.WriteLine("Informations Utilisation:");
             Console.WriteLine("");
@@ -81,21 +87,28 @@ namespace Internet
             System.Threading.Thread.Sleep(500);
             if(i == r/2){
             Console.WriteLine("Test en cours...");
+            
             }
+            
             }
             float md = d/r;
             float mu = u/r;
+            Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop - 1);
+            Console.WriteLine("                                                                                                   ");         
             Console.WriteLine("Download: {0} Kb/s\tUpload: {1} Kb/s", md, mu);
+            Console.WriteLine("--------------------------------------------------------------");  
             Console.WriteLine("Appuyez sur r pour recommencer le programme ou sur une autre touche pour quitter");
             string rest = Console.ReadLine();
             if(rest == "r"){
+            Console.Clear();
             Console.WriteLine("Redémarrage du programme");
+            Main();
             }
             else 
             {
             Console.Write("Press any key to exit...");
             Console.ReadKey(true);
             }            
-        }
+    }
     }
 }
